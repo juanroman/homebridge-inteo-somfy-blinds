@@ -1,0 +1,114 @@
+{
+  "pluginAlias": "InteoSomfyBlinds",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "## Somfy RTS Blinds via Inteo/Neocontrol Hub\n\n**Important:** This plugin supports binary control only (fully open or fully closed). Partial positions are not available because Somfy RTS motors have no position feedback.",
+  "footerDisplay": "### Finding Scene Numbers\n\nScene numbers are assigned based on **creation order** in the Inteo app, NOT the alphabetical display order. Count from 0 starting with the first scene you created.\n\n**Tip:** If unsure, test scene numbers starting from 0 using the Inteo app's scene execution feature while monitoring which blind moves.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Platform Name",
+        "type": "string",
+        "default": "Somfy Blinds",
+        "description": "Display name for this platform in Homebridge logs"
+      },
+      "hubMac": {
+        "title": "Hub MAC Address",
+        "type": "string",
+        "required": true,
+        "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$|^[0-9A-Fa-f]{12}$",
+        "placeholder": "44:D5:F2:C1:03:AC",
+        "description": "MAC address of your Neocontrol/Inteo hub (with or without colons)"
+      },
+      "baseUrl": {
+        "title": "API Base URL",
+        "type": "string",
+        "default": "http://iOS.neocontrolglobal.com:9151",
+        "description": "Neocontrol cloud API URL (usually doesn't need to be changed)"
+      },
+      "blinds": {
+        "title": "Blinds",
+        "type": "array",
+        "required": true,
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Blind Name",
+              "type": "string",
+              "required": true,
+              "placeholder": "Living Room",
+              "description": "Display name in HomeKit"
+            },
+            "openScene": {
+              "title": "Open Scene Number",
+              "type": "integer",
+              "required": true,
+              "minimum": 0,
+              "placeholder": "0",
+              "description": "Scene number that opens this blind (0-indexed by creation order)"
+            },
+            "closeScene": {
+              "title": "Close Scene Number",
+              "type": "integer",
+              "required": true,
+              "minimum": 0,
+              "placeholder": "1",
+              "description": "Scene number that closes this blind (0-indexed by creation order)"
+            }
+          }
+        }
+      },
+      "advanced": {
+        "title": "Advanced Settings",
+        "type": "object",
+        "expandable": true,
+        "properties": {
+          "retryAttempts": {
+            "title": "Retry Attempts",
+            "type": "integer",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Number of times to retry failed commands"
+          },
+          "requestTimeout": {
+            "title": "Request Timeout (ms)",
+            "type": "integer",
+            "default": 5000,
+            "minimum": 1000,
+            "maximum": 30000,
+            "description": "HTTP request timeout in milliseconds"
+          }
+        }
+      }
+    }
+  },
+  "form": [
+    "name",
+    "hubMac",
+    {
+      "key": "blinds",
+      "type": "array",
+      "title": "Blinds",
+      "description": "Configure each blind with its open and close scene numbers",
+      "buttonText": "Add Blind",
+      "items": [
+        "blinds[].name",
+        "blinds[].openScene",
+        "blinds[].closeScene"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Advanced Settings",
+      "expandable": true,
+      "items": [
+        "advanced.retryAttempts",
+        "advanced.requestTimeout"
+      ]
+    },
+    "baseUrl"
+  ]
+}

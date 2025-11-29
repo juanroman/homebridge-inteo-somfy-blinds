@@ -1,0 +1,24 @@
+# Source files (we ship compiled JS)
+src/
+
+# Tests
+test/
+coverage/
+vitest.config.ts
+
+# Config files not needed for consumers
+.eslintrc*
+eslint.config.js
+.prettierrc
+tsconfig.json
+.github/
+
+# Development files
+.gitignore
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# PRD (internal planning doc)
+prd.md

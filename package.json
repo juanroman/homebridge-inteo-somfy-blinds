@@ -1,0 +1,61 @@
+{
+  "name": "homebridge-inteo-somfy-blinds",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Homebridge plugin for Somfy RTS blinds via Neocontrol/Inteo hub - exposes blinds as proper HomeKit Window Covering accessories",
+  "license": "MIT",
+  "author": "Juan Roman",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanroman/homebridge-inteo-somfy-blinds.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanroman/homebridge-inteo-somfy-blinds/issues"
+  },
+  "homepage": "https://github.com/juanroman/homebridge-inteo-somfy-blinds#readme",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "homebridge": "^1.8.0 || ^2.0.0-beta.0",
+    "node": "^18.20.4 || ^20.15.1 || ^22"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "somfy",
+    "rts",
+    "blinds",
+    "window-covering",
+    "neocontrol",
+    "inteo",
+    "curtains",
+    "shades"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "watch": "tsc -w",
+    "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.10.1",
+    "@vitest/coverage-v8": "^2.1.6",
+    "eslint": "^9.15.0",
+    "homebridge": "^2.0.0-beta.0",
+    "prettier": "^3.4.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0",
+    "vitest": "^2.1.6"
+  },
+  "peerDependencies": {
+    "homebridge": "^1.8.0 || ^2.0.0-beta.0"
+  }
+}

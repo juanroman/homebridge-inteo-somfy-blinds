@@ -29,3 +29,6 @@ npm-debug.log*
 
 # Homebridge test config (may contain real credentials)
 test-config/
+
+# Internal PRD (contains development notes)
+prd.md

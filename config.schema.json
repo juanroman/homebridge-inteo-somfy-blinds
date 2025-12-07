@@ -18,7 +18,7 @@
         "type": "string",
         "required": true,
         "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$|^[0-9A-Fa-f]{12}$",
-        "placeholder": "44:D5:F2:C1:03:AC",
+        "placeholder": "AA:BB:CC:DD:EE:FF",
         "description": "MAC address of your Neocontrol/Inteo hub (with or without colons)"
       },
       "baseUrl": {

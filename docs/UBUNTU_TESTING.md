@@ -33,12 +33,12 @@ Unlike Docker on macOS (which has networking limitations), Parallels Ubuntu with
 # In Ubuntu terminal
 ip addr show
 
-# Look for an IP like 192.168.81.x (same subnet as your Mac)
+# Look for an IP like 192.168.1.x (same subnet as your Mac)
 # Example output:
-# inet 192.168.81.100/24
+# inet 192.168.1.100/24
 ```
 
-Your Ubuntu should now have an IP like `192.168.81.100` (on the same network as your Mac at `192.168.81.90`).
+Your Ubuntu should now have an IP like `192.168.1.100` (on the same network as your Mac at `192.168.1.50`).
 
 ## Step 2: Install Node.js 22
 
@@ -98,7 +98,7 @@ Create the configuration file:
 nano ~/.homebridge/config.json
 ```
 
-Paste this configuration (adjust if needed):
+Paste this configuration (adjust with your hardware details):
 
 ```json
 {
@@ -113,31 +113,31 @@ Paste this configuration (adjust if needed):
     {
       "platform": "InteoSomfyBlinds",
       "name": "Somfy Blinds",
-      "hubMac": "44D5F2C103AC",
+      "hubMac": "AABBCCDDEEFF",
       "baseUrl": "http://iOS.neocontrolglobal.com:9151",
       "blinds": [
         {
-          "name": "Cortina",
+          "name": "Bedroom",
           "openScene": 1,
           "closeScene": 0
         },
         {
-          "name": "Dark",
+          "name": "Office",
           "openScene": 3,
           "closeScene": 4
         },
         {
-          "name": "Cocina",
+          "name": "Kitchen",
           "openScene": 2,
           "closeScene": 5
         },
         {
-          "name": "Sala Izquierda",
+          "name": "Living Room Left",
           "openScene": 6,
           "closeScene": 7
         },
         {
-          "name": "Sala Derecha",
+          "name": "Living Room Right",
           "openScene": 8,
           "closeScene": 9
         }
@@ -171,11 +171,11 @@ You should see output like:
 [12/7/2025, 10:30:00 AM] ---
 [12/7/2025, 10:30:00 AM] Loading 1 platforms...
 [12/7/2025, 10:30:00 AM] [Somfy Blinds] Initializing InteoSomfyBlinds platform...
-[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Cortina
-[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Dark
-[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Cocina
-[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Sala Izquierda
-[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Sala Derecha
+[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Bedroom
+[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Office
+[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Kitchen
+[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Living Room Left
+[12/7/2025, 10:30:00 AM] [Somfy Blinds] Adding new accessory: Living Room Right
 
 Setup Payload:
 ┌────────────────────────────────────────┐
@@ -204,11 +204,11 @@ Homebridge v1.x.x is running on port 51826.
 5. Tap it and enter the PIN: **031-45-154**
 6. Follow the setup wizard
 7. All 5 window coverings should appear:
-   - Cortina
-   - Dark
-   - Cocina
-   - Sala Izquierda
-   - Sala Derecha
+   - Bedroom
+   - Office
+   - Kitchen
+   - Living Room Left
+   - Living Room Right
 
 If it doesn't appear automatically:
 - Tap **More Options...**
@@ -230,8 +230,8 @@ Watch the Homebridge logs for debugging:
 ```bash
 # Homebridge is already running in foreground, so you'll see logs immediately
 # Look for messages like:
-# [Somfy Blinds] Setting Cortina to 100% (OPEN)
-# [Somfy Blinds] Successfully triggered scene 1 for Cortina
+# [Somfy Blinds] Setting Bedroom to 100% (OPEN)
+# [Somfy Blinds] Successfully triggered scene 1 for Bedroom
 ```
 
 ## Development Workflow
@@ -283,9 +283,9 @@ sudo hb-service logs
 **Check network configuration:**
 ```bash
 ip addr show
-# Verify Ubuntu has an IP on 192.168.81.x
+# Verify Ubuntu has an IP on 192.168.1.x
 
-ping 192.168.81.90  # Ping your Mac
+ping 192.168.1.50  # Ping your Mac
 # Should work if networking is correct
 ```
 
@@ -321,8 +321,8 @@ sudo npm link
 
 **Test API directly from Ubuntu:**
 ```bash
-# Try opening Cortina (scene 1)
-curl "http://iOS.neocontrolglobal.com:9151/mqtt/command/44D5F2C103AC/1"
+# Try opening a blind (scene 1) - use your actual hub MAC address
+curl "http://iOS.neocontrolglobal.com:9151/mqtt/command/AABBCCDDEEFF/1"
 
 # Should return HTTP 200
 # Your blind should move
@@ -340,11 +340,11 @@ If you're developing in macOS but running Homebridge in Ubuntu:
 
 ## Network Details
 
-**Your setup:**
-- Mac IP: `192.168.81.90`
-- Ubuntu IP: `192.168.81.x` (check with `ip addr`)
-- Production Homebridge (Mac): `192.168.81.90:51403`
-- Test Homebridge (Ubuntu): `192.168.81.x:51826`
+**Example setup:**
+- Mac IP: `192.168.1.50`
+- Ubuntu IP: `192.168.1.x` (check with `ip addr`)
+- Production Homebridge (Mac): `192.168.1.50:51403`
+- Test Homebridge (Ubuntu): `192.168.1.x:51826`
 
 Both are on the same network, completely isolated, won't interfere with each other.
 

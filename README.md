@@ -53,7 +53,7 @@ To find your scene numbers:
     {
       "platform": "InteoSomfyBlinds",
       "name": "Somfy Blinds",
-      "hubMac": "44:D5:F2:C1:03:AC",
+      "hubMac": "AA:BB:CC:DD:EE:FF",
       "blinds": [
         {
           "name": "Living Room",
@@ -162,7 +162,7 @@ Contributions are welcome! Please:
 
 ## Integration Testing
 
-For testing with real hardware, see [UBUNTU_TESTING.md](UBUNTU_TESTING.md) for a comprehensive guide on setting up a test environment using Ubuntu on Parallels (or any Linux VM/machine).
+For testing with real hardware, see [docs/UBUNTU_TESTING.md](docs/UBUNTU_TESTING.md) for a comprehensive guide on setting up a test environment using Ubuntu on Parallels (or any Linux VM/machine).
 
 **Why Linux?** HomeKit uses mDNS/Bonjour for discovery, which works perfectly on Linux with proper network configuration. This provides a safe, isolated test environment separate from your production Homebridge.
 

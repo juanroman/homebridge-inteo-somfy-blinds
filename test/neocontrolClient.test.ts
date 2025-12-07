@@ -15,7 +15,7 @@ describe('NeocontrolClient', () => {
       server.baseUrl,
       '44:D5:F2:C1:03:AC', // MAC with colons
       3, // retryAttempts
-      2000, // requestTimeout
+      300, // requestTimeout (reduced for faster tests)
       mockLogger as any,
     );
     vi.clearAllMocks();
@@ -77,7 +77,7 @@ describe('NeocontrolClient', () => {
 
     it('should handle timeout errors', async () => {
       // Set delay longer than client timeout
-      server.setResponse({ delay: 5000 });
+      server.setResponse({ delay: 500 });
 
       await expect(client.executeScene(1)).rejects.toThrow('after 3 attempts');
 
@@ -101,7 +101,7 @@ describe('NeocontrolClient', () => {
       // With 3 attempts and backoff of 1s, 2s, total should be at least ~3s
       // But first attempt is immediate, so: 0 + 1000 + 2000 = 3000ms minimum
       // Allow some tolerance
-      expect(totalTime).toBeGreaterThanOrEqual(2500);
+      expect(totalTime).toBeGreaterThanOrEqual(2900);
     });
 
     it('should log debug message on success', async () => {
@@ -128,7 +128,7 @@ describe('NeocontrolClient', () => {
         server.baseUrl,
         '44D5F2C103AC', // MAC without colons
         1,
-        2000,
+        300,
         mockLogger as any,
       );
 

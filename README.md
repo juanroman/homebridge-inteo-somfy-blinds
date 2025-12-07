@@ -145,7 +145,7 @@ This means the command failed. Check:
 
 ## Requirements
 
-- Node.js 18.20.4+, 20.15.1+, or 22+
+- Node.js 20.15.1+ or 22+
 - Homebridge 1.8.0+ or 2.0.0+
 - Neocontrol/Inteo hub with cloud connectivity
 - Scenes configured in the Inteo app

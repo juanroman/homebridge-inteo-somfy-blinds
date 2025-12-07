@@ -57,27 +57,32 @@ describe('InteoSomfyBlindsPlatform', () => {
       },
       registerPlatformAccessories: vi.fn(),
       unregisterPlatformAccessories: vi.fn(),
-      platformAccessory: vi.fn((name: string, uuid: string) => ({
-        displayName: name,
-        UUID: uuid,
-        context: {},
-        getService: vi.fn(() => ({
+      platformAccessory: class {
+        displayName: string;
+        UUID: string;
+        context = {};
+        getService = vi.fn(() => ({
           setCharacteristic: vi.fn().mockReturnThis(),
           getCharacteristic: vi.fn(() => ({
             onGet: vi.fn().mockReturnThis(),
             onSet: vi.fn().mockReturnThis(),
           })),
           updateCharacteristic: vi.fn().mockReturnThis(),
-        })),
-        addService: vi.fn(() => ({
+        }));
+        addService = vi.fn(() => ({
           setCharacteristic: vi.fn().mockReturnThis(),
           getCharacteristic: vi.fn(() => ({
             onGet: vi.fn().mockReturnThis(),
             onSet: vi.fn().mockReturnThis(),
           })),
           updateCharacteristic: vi.fn().mockReturnThis(),
-        })),
-      })),
+        }));
+
+        constructor(name: string, uuid: string) {
+          this.displayName = name;
+          this.UUID = uuid;
+        }
+      },
     };
 
     vi.clearAllMocks();

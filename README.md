@@ -160,6 +160,12 @@ Contributions are welcome! Please:
 4. Ensure all tests pass (`npm test`)
 5. Submit a pull request
 
+## Integration Testing
+
+For testing with real hardware, see [UBUNTU_TESTING.md](UBUNTU_TESTING.md) for a comprehensive guide on setting up a test environment using Ubuntu on Parallels (or any Linux VM/machine).
+
+**Why Linux?** HomeKit uses mDNS/Bonjour for discovery, which works perfectly on Linux with proper network configuration. This provides a safe, isolated test environment separate from your production Homebridge.
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.

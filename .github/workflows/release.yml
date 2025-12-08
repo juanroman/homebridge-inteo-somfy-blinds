@@ -1,0 +1,155 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.1, v2.0.0, etc.
+
+jobs:
+  # Job 1: Run full test suite on all supported Node versions
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20, 22, 24]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test with coverage
+        run: npm run test:coverage
+
+  # Job 2: Manual approval gate (waits for user to click "Approve deployment")
+  approve:
+    runs-on: ubuntu-latest
+    needs: test
+    environment: production  # GitHub Environment with manual approval
+
+    steps:
+      - name: Manual approval checkpoint
+        run: |
+          echo "✅ All tests passed on Node 20, 22, and 24"
+          echo "🚀 Ready to publish to npm and create GitHub release"
+          echo "👤 Waiting for manual approval..."
+
+  # Job 3: Publish package to npm
+  publish:
+    runs-on: ubuntu-latest
+    needs: approve
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          # npm CLI will use OIDC if trusted publishing is configured on npmjs.com
+          # Otherwise, it falls back to NPM_TOKEN (Granular Access Token)
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify package is installable
+        run: |
+          # Wait a few seconds for npm registry to propagate
+          sleep 10
+          # Extract version from tag (v1.0.1 → 1.0.1)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          # Try to install the just-published version
+          npm install homebridge-inteo-somfy-blinds@$VERSION --dry-run
+
+  # Job 4: Create GitHub release with automated notes
+  release:
+    runs-on: ubuntu-latest
+    needs: publish
+    permissions:
+      contents: write  # Required to create releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for release notes generation
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # v1.0.1 → 1.0.1
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+
+      - name: Create GitHub Release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ steps.version.outputs.version }}';
+            const tagName = `v${version}`;
+
+            // Generate release notes
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tagName,
+              name: `v${version}`,
+              body: `## Release v${version}
+
+            This release has been automatically published to npm.
+
+            ### Installation
+            \`\`\`bash
+            npm install homebridge-inteo-somfy-blinds@${version}
+            \`\`\`
+
+            ### NPM Package
+            https://www.npmjs.com/package/homebridge-inteo-somfy-blinds/v/${version}
+
+            ### Changes
+            See commits since last release for detailed changes.
+            `,
+              generate_release_notes: true,  // Auto-generate from commits
+              draft: false,
+              prerelease: false
+            });
+
+            console.log(`✅ GitHub Release created: ${release.html_url}`);
+
+      - name: Release summary
+        run: |
+          echo "🎉 Release completed successfully!"
+          echo "📦 npm: https://www.npmjs.com/package/homebridge-inteo-somfy-blinds/v/${{ steps.version.outputs.version }}"
+          echo "📋 GitHub: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.version }}"

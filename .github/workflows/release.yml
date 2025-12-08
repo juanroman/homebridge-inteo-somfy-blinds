@@ -68,7 +68,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
+          # Note: registry-url is NOT set for OIDC authentication
+          # npm CLI will auto-detect OIDC via id-token permission
 
       - name: Install dependencies
         run: npm ci
@@ -78,10 +79,8 @@ jobs:
 
       - name: Publish to npm
         run: npm publish
-        env:
-          # npm CLI will use OIDC if trusted publishing is configured on npmjs.com
-          # Otherwise, it falls back to NPM_TOKEN (Granular Access Token)
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Note: No env variables needed - npm CLI auto-detects OIDC
+        # via the id-token permission and trusted publisher configuration
 
       - name: Verify package is installable
         run: |

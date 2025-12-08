@@ -4,7 +4,9 @@
 [![CI](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Homebridge plugin for Somfy RTS blinds controlled via Inteo/Neocontrol hub. Exposes your blinds as proper HomeKit Window Covering accessories.
+Homebridge plugin for **Somfy RTS blinds controlled via Inteo/Neocontrol hub**. Exposes your blinds as proper HomeKit Window Covering accessories.
+
+> **Important:** This plugin is specifically designed for the **Somfy RTS + Inteo/Neocontrol hub** combination, which is a popular smart home setup in Mexico and Latin America. If you have a different Somfy system (TaHoma, Connexoon, myLink, etc.), this plugin will not work for you.
 
 ## Important Limitations
 
@@ -143,9 +145,25 @@ This means the command failed. Check:
 - Scene number accuracy
 - Homebridge logs for specific errors
 
+## What Makes This Plugin Unique?
+
+This plugin is designed for a specific hardware combination that is **not supported by other Homebridge plugins**:
+
+- **Hardware:** Somfy RTS motors + Inteo/Neocontrol hub
+- **API:** Uses Neocontrol's cloud API
+- **Control Method:** Scene-based control (each blind operation is a scene in the Inteo app)
+- **Region:** Popular setup in Mexico and Latin America
+
+**This is NOT for:**
+
+- Somfy TaHoma hubs (use homebridge-tahoma)
+- Somfy Connexoon hubs (use homebridge-connexoon)
+- Somfy myLink bridges (use homebridge-mylink)
+- Direct Somfy RTS control without a hub
+
 ## Requirements
 
-- Node.js 20.15.1+ or 22+
+- Node.js 20.15.1+, 22+, or 24+
 - Homebridge 1.8.0+ or 2.0.0+
 - Neocontrol/Inteo hub with cloud connectivity
 - Scenes configured in the Inteo app

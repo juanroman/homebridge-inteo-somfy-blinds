@@ -83,46 +83,27 @@ This plugin serves a specific hardware combination **NOT supported by any other 
 
 ---
 
-### ⚠️ GitHub Releases
+### ✅ GitHub Releases
 
 **Requirement:** A GitHub release should be created for every new version of your plugin, with release notes.
 
-**Status:** ⚠️ NOT YET APPLICABLE
+**Status:** ✅ COMPLIANT
 
-**Action Required:**
-- [ ] Create GitHub Release v1.0.0 when publishing
-- [ ] Include release notes covering:
-  - Initial release announcement
-  - Feature list
-  - Known limitations (binary control only)
-  - Installation instructions
-- [ ] Set up process/reminder for future version releases
+**Evidence:**
+- ✅ GitHub Release v1.0.0 created with comprehensive release notes
+- ✅ Release includes feature list, installation instructions, and limitations
+- ✅ Links to NPM package and documentation
+- ✅ Tagged commit: `v1.0.0`
 
-**Template for v1.0.0 Release Notes:**
-```markdown
-## Initial Release 🎉
+**Release:**
+- URL: https://github.com/juanroman/homebridge-inteo-somfy-blinds/releases/tag/v1.0.0
+- Tag: v1.0.0
+- Title: "v1.0.0 - Initial Release"
 
-First public release of homebridge-inteo-somfy-blinds!
-
-### Features
-- HomeKit Window Covering support for Somfy RTS blinds via Inteo/Neocontrol hub
-- Binary control (open/closed) with graceful handling of RTS motor limitations
-- Automatic retry with exponential backoff
-- Homebridge Config UI support with validation
-- Comprehensive error handling and logging
-
-### Requirements
-- Node.js 20.15.1+ or 22+
-- Homebridge 1.8.0+
-- Neocontrol/Inteo hub with cloud connectivity
-
-### Known Limitations
-- Partial positions not supported (Somfy RTS motors have no position feedback)
-- Cloud API dependency (no local control yet)
-
-### Installation
-See [README.md](README.md) for installation and configuration instructions.
-```
+**Future Releases:**
+- Create new GitHub release for each version published to NPM
+- Include changelog with breaking changes, features, and bug fixes
+- Link to corresponding NPM package version
 
 ---
 
@@ -246,7 +227,7 @@ Complete these tasks before submitting verification request:
 - [x] Research competing plugins to confirm unique functionality
 - [x] Verify GitHub issues are enabled
 - [x] Publish plugin to NPM
-- [ ] Create GitHub Release v1.0.0 with release notes
+- [x] Create GitHub Release v1.0.0 with release notes
 
 ### Recommended
 

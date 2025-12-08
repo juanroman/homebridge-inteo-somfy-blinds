@@ -22,7 +22,7 @@ The release process is **semi-automated** with a **manual approval gate** for sa
 
 Before your first release, ensure you've completed the one-time setup:
 
-- [x] NPM_TOKEN configured in GitHub Secrets (see [docs/NPM_TOKEN_SETUP.md](NPM_TOKEN_SETUP.md))
+- [x] OIDC Trusted Publisher configured on npmjs.com (see [OIDC_SETUP.md](OIDC_SETUP.md))
 - [x] GitHub Environment "production" created with you as required reviewer
 - [x] All tests passing locally (`npm test`)
 - [x] Git working tree is clean
@@ -130,7 +130,7 @@ Once all tests pass, GitHub will:
 After you approve, GitHub Actions will:
 
 1. **Build the production bundle**
-2. **Publish to npm** using your NPM_TOKEN
+2. **Publish to npm** via OIDC authentication
 3. **Verify** the package is installable
 4. **Create GitHub release** with auto-generated notes
 
@@ -298,14 +298,15 @@ If npm publish succeeded but GitHub release creation failed:
 3. Refresh the GitHub Actions page
 4. Check your notification settings
 
-### npm Publish Fails with Authentication Error
+### npm Publish Fails with OIDC Error
 
-**Symptom:** `npm ERR! code ENEEDAUTH` or `npm ERR! code E401`
+**Symptom:** `npm ERR! code ENEEDAUTH` or authentication errors
 
 **Solution:**
-1. Verify NPM_TOKEN is set in GitHub Secrets
-2. Verify token hasn't expired (check npmjs.com → Account → Access Tokens)
-3. Regenerate token if needed (see [docs/NPM_TOKEN_SETUP.md](NPM_TOKEN_SETUP.md))
+1. Verify OIDC trusted publisher is configured on npmjs.com
+2. Verify workflow configuration matches npmjs.com exactly
+3. Check npm CLI was upgraded to 11.5.1+ (see workflow logs)
+4. See [OIDC_SETUP.md](OIDC_SETUP.md) for detailed troubleshooting
 
 ### Package Already Published
 

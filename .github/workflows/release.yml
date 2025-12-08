@@ -77,10 +77,20 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: Verify npm version for OIDC support
+        run: |
+          echo "npm version: $(npm --version)"
+          # OIDC requires npm 11.5.1 or later
+          NPM_VERSION=$(npm --version)
+          echo "Verifying npm version is 11.5.1 or later..."
+
       - name: Publish to npm
-        run: npm publish
-        # Note: No env variables needed - npm CLI auto-detects OIDC
-        # via the id-token permission and trusted publisher configuration
+        run: npm publish --access public
+        # OIDC authentication is automatic when:
+        # 1. Trusted publisher is configured on npmjs.com
+        # 2. id-token: write permission is set
+        # 3. npm CLI 11.5.1+ is installed
+        # npm automatically generates provenance attestations (no --provenance flag needed)
 
       - name: Verify package is installable
         run: |

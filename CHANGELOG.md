@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Removed peerDependencies to prevent npm 7+ from auto-installing homebridge during verification (compatibility now specified via engines field only)
+- Removed peerDependencies to prevent npm 7+ from auto-installing homebridge during verification (homebridge kept in devDependencies for TypeScript compilation, engines field used for compatibility declaration)
 
 ## [1.0.3] - 2025-12-08
 

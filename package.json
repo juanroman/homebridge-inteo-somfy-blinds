@@ -59,8 +59,5 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0",
     "vitest": "^4.0.15"
-  },
-  "peerDependencies": {
-    "homebridge": "^1.8.0 || ^2.0.0-beta.0"
   }
 }

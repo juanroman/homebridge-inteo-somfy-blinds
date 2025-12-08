@@ -77,12 +77,12 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
-      - name: Verify npm version for OIDC support
+      - name: Upgrade npm for OIDC support
         run: |
-          echo "npm version: $(npm --version)"
+          echo "Current npm version: $(npm --version)"
+          npm install -g npm@latest
+          echo "Updated npm version: $(npm --version)"
           # OIDC requires npm 11.5.1 or later
-          NPM_VERSION=$(npm --version)
-          echo "Verifying npm version is 11.5.1 or later..."
 
       - name: Publish to npm
         run: npm publish --access public

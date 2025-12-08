@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Homebridge plugin for Somfy RTS blinds via Neocontrol/Inteo hub - exposes blinds as proper HomeKit Window Covering accessories",
   "license": "MIT",
-  "author": "Juan Roman",
+  "author": "juanroman",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juanroman/homebridge-inteo-somfy-blinds.git"
@@ -16,7 +16,7 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
-    "dist",
+    "dist/src",
     "config.schema.json"
   ],
   "engines": {
@@ -32,6 +32,7 @@
     "window-covering",
     "neocontrol",
     "inteo",
+    "homekit",
     "curtains",
     "shades"
   ],

@@ -16,7 +16,6 @@
       "hubMac": {
         "title": "Hub MAC Address",
         "type": "string",
-        "required": true,
         "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$|^[0-9A-Fa-f]{12}$",
         "placeholder": "AA:BB:CC:DD:EE:FF",
         "description": "MAC address of your Neocontrol/Inteo hub (with or without colons)"
@@ -30,21 +29,18 @@
       "blinds": {
         "title": "Blinds",
         "type": "array",
-        "required": true,
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "title": "Blind Name",
               "type": "string",
-              "required": true,
               "placeholder": "Living Room",
               "description": "Display name in HomeKit"
             },
             "openScene": {
               "title": "Open Scene Number",
               "type": "integer",
-              "required": true,
               "minimum": 0,
               "placeholder": "0",
               "description": "Scene number that opens this blind (0-indexed by creation order)"
@@ -52,12 +48,12 @@
             "closeScene": {
               "title": "Close Scene Number",
               "type": "integer",
-              "required": true,
               "minimum": 0,
               "placeholder": "1",
               "description": "Scene number that closes this blind (0-indexed by creation order)"
             }
-          }
+          },
+          "required": ["name", "openScene", "closeScene"]
         }
       },
       "advanced": {
@@ -83,7 +79,8 @@
           }
         }
       }
-    }
+    },
+    "required": ["hubMac", "blinds"]
   },
   "form": [
     "name",

@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/homebridge-inteo-somfy-blinds.svg)](https://www.npmjs.com/package/homebridge-inteo-somfy-blinds)
 [![CI](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml)
+[![Release](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Homebridge plugin for **Somfy RTS blinds controlled via Inteo/Neocontrol hub**. Exposes your blinds as proper HomeKit Window Covering accessories.

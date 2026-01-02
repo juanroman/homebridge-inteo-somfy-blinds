@@ -1,5 +1,7 @@
 # homebridge-inteo-somfy-blinds
 
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=for-the-badge&logoColor=%23FFFFFF&logo=homebridge)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+
 [![npm version](https://img.shields.io/npm/v/homebridge-inteo-somfy-blinds.svg)](https://www.npmjs.com/package/homebridge-inteo-somfy-blinds)
 [![CI](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/ci.yml)
 [![Release](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml)

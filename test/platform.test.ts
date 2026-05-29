@@ -90,13 +90,13 @@ describe('InteoSomfyBlindsPlatform', () => {
 
   describe('initialization', () => {
     it('should register didFinishLaunching listener', () => {
-      new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       expect(mockApi.on).toHaveBeenCalledWith('didFinishLaunching', expect.any(Function));
     });
 
     it('should log debug message on initialization', () => {
-      new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       expect(mockLog.debug).toHaveBeenCalledWith(
         'Finished initializing platform:',
@@ -107,7 +107,7 @@ describe('InteoSomfyBlindsPlatform', () => {
 
   describe('configureAccessory', () => {
     it('should cache restored accessories', () => {
-      const platform = new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      const platform = new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       const mockAccessory = {
         displayName: 'Cached Blind',
@@ -122,7 +122,7 @@ describe('InteoSomfyBlindsPlatform', () => {
 
   describe('device discovery', () => {
     it('should register accessories for each blind in config', () => {
-      new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       // Trigger didFinishLaunching
       didFinishLaunchingCallback?.();
@@ -137,7 +137,7 @@ describe('InteoSomfyBlindsPlatform', () => {
     });
 
     it('should generate unique UUIDs per blind', () => {
-      new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       didFinishLaunchingCallback?.();
 
@@ -149,7 +149,7 @@ describe('InteoSomfyBlindsPlatform', () => {
       const configWithoutBaseUrl = { ...validConfig };
       delete (configWithoutBaseUrl as any).baseUrl;
 
-      new InteoSomfyBlindsPlatform(mockLog as any, configWithoutBaseUrl as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, configWithoutBaseUrl, mockApi);
 
       didFinishLaunchingCallback?.();
 
@@ -158,7 +158,7 @@ describe('InteoSomfyBlindsPlatform', () => {
     });
 
     it('should restore cached accessories instead of creating new ones', () => {
-      const platform = new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      const platform = new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       // Simulate cached accessory
       const cachedAccessory = {
@@ -198,7 +198,7 @@ describe('InteoSomfyBlindsPlatform', () => {
     it('should log error if hubMac is missing', () => {
       const invalidConfig = { ...validConfig, hubMac: '' };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, invalidConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, invalidConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.error).toHaveBeenCalledWith(expect.stringContaining('hubMac is required'));
@@ -208,7 +208,7 @@ describe('InteoSomfyBlindsPlatform', () => {
     it('should log error if blinds array is missing', () => {
       const invalidConfig = { ...validConfig, blinds: undefined };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, invalidConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, invalidConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.error).toHaveBeenCalledWith(
@@ -219,7 +219,7 @@ describe('InteoSomfyBlindsPlatform', () => {
     it('should log warning if blinds array is empty', () => {
       const emptyConfig = { ...validConfig, blinds: [] };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, emptyConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, emptyConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.warn).toHaveBeenCalledWith('No blinds configured');
@@ -231,7 +231,7 @@ describe('InteoSomfyBlindsPlatform', () => {
         blinds: [{ openScene: 1, closeScene: 0 }],
       };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, invalidConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, invalidConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.error).toHaveBeenCalledWith(expect.stringContaining('missing name'));
@@ -243,7 +243,7 @@ describe('InteoSomfyBlindsPlatform', () => {
         blinds: [{ name: 'Test', closeScene: 0 }],
       };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, invalidConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, invalidConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.error).toHaveBeenCalledWith(expect.stringContaining('missing openScene'));
@@ -255,7 +255,7 @@ describe('InteoSomfyBlindsPlatform', () => {
         blinds: [{ name: 'Test', openScene: 1 }],
       };
 
-      new InteoSomfyBlindsPlatform(mockLog as any, invalidConfig as any, mockApi);
+      new InteoSomfyBlindsPlatform(mockLog, invalidConfig, mockApi);
       didFinishLaunchingCallback?.();
 
       expect(mockLog.error).toHaveBeenCalledWith(expect.stringContaining('missing closeScene'));
@@ -264,7 +264,7 @@ describe('InteoSomfyBlindsPlatform', () => {
 
   describe('stale accessory removal', () => {
     it('should remove accessories no longer in config', () => {
-      const platform = new InteoSomfyBlindsPlatform(mockLog as any, validConfig as any, mockApi);
+      const platform = new InteoSomfyBlindsPlatform(mockLog, validConfig, mockApi);
 
       // Simulate a cached accessory that's not in current config
       const staleAccessory = {

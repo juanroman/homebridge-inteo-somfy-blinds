@@ -22,7 +22,7 @@
   ],
   "engines": {
     "homebridge": "^1.8.0 || ^2.0.0-beta.0",
-    "node": "^20.15.1 || ^22 || ^24"
+    "node": "^22 || ^24"
   },
   "keywords": [
     "homebridge-plugin",
@@ -50,15 +50,16 @@
     "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.15.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.10.1",
     "@vitest/coverage-v8": "^4.0.15",
-    "eslint": "^9.15.0",
+    "eslint": "^10.4.0",
     "homebridge": "^2.0.0-beta.0",
+    "jiti": "^2.7.0",
     "prettier": "^3.4.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.16.0",
+    "typescript-eslint": "^8.60.0",
     "vitest": "^4.0.15"
   }
 }

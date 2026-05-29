@@ -36,7 +36,7 @@ describe('BlindAccessory', () => {
       mockAccessory as any,
       blindConfig,
       mockClient,
-      mockLogger as any,
+      mockLogger,
     );
   });
 

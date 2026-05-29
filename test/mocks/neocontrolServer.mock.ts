@@ -140,7 +140,7 @@ export class MockNeocontrolServer {
     this.requests.push({
       method: req.method ?? 'GET',
       url: req.url ?? '/',
-      headers: req.headers as Record<string, string | string[] | undefined>,
+      headers: req.headers,
       timestamp: new Date(),
     });
 

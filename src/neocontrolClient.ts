@@ -99,7 +99,7 @@ export class NeocontrolClient implements INeocontrolClient {
       }
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
-        throw new Error(`Request timeout after ${String(this.requestTimeout)}ms`);
+        throw new Error(`Request timeout after ${String(this.requestTimeout)}ms`, { cause: error });
       }
       throw error;
     } finally {

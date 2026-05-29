@@ -16,7 +16,7 @@ describe('NeocontrolClient', () => {
       '44:D5:F2:C1:03:AC', // MAC with colons
       3, // retryAttempts
       300, // requestTimeout (reduced for faster tests)
-      mockLogger as any,
+      mockLogger,
     );
     vi.clearAllMocks();
   });
@@ -129,7 +129,7 @@ describe('NeocontrolClient', () => {
         '44D5F2C103AC', // MAC without colons
         1,
         300,
-        mockLogger as any,
+        mockLogger,
       );
 
       await clientWithoutColons.executeScene(3);

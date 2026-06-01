@@ -12,7 +12,6 @@ describe('InteoSomfyBlindsPlatform', () => {
     platform: 'InteoSomfyBlinds',
     name: 'Somfy Blinds',
     hubMac: '44:D5:F2:C1:03:AC',
-    baseUrl: 'http://localhost:9999',
     blinds: [
       { name: 'Living Room', openScene: 1, closeScene: 0 },
       { name: 'Bedroom', openScene: 3, closeScene: 2 },
@@ -143,18 +142,6 @@ describe('InteoSomfyBlindsPlatform', () => {
 
       expect(mockApi.hap.uuid.generate).toHaveBeenCalledWith(`${validConfig.hubMac}-Living Room`);
       expect(mockApi.hap.uuid.generate).toHaveBeenCalledWith(`${validConfig.hubMac}-Bedroom`);
-    });
-
-    it('should use default baseUrl if not provided', () => {
-      const configWithoutBaseUrl = { ...validConfig };
-      delete (configWithoutBaseUrl as any).baseUrl;
-
-      new InteoSomfyBlindsPlatform(mockLog, configWithoutBaseUrl, mockApi);
-
-      didFinishLaunchingCallback?.();
-
-      // Should not throw and should register accessories
-      expect(mockApi.registerPlatformAccessories).toHaveBeenCalled();
     });
 
     it('should restore cached accessories instead of creating new ones', () => {

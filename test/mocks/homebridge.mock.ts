@@ -157,9 +157,9 @@ export function createMockPlatform() {
 }
 
 /**
- * Create a mock INeocontrolClient.
+ * Create a mock IInteoHubClient.
  */
-export function createMockNeocontrolClient() {
+export function createMockInteoHubClient() {
   return {
     executeScene: vi.fn().mockResolvedValue(undefined),
   };

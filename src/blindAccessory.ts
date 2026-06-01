@@ -1,6 +1,6 @@
 import type { CharacteristicValue, Logger, PlatformAccessory, Service } from 'homebridge';
 
-import type { INeocontrolClient } from './neocontrolClient.js';
+import type { IInteoHubClient } from './inteoHubClient.js';
 import type { InteoSomfyBlindsPlatform } from './platform.js';
 import type { BlindConfig } from './types.js';
 import { Position } from './types.js';
@@ -37,7 +37,7 @@ export class BlindAccessory {
     private readonly platform: InteoSomfyBlindsPlatform,
     private readonly accessory: PlatformAccessory,
     private readonly blindConfig: BlindConfig,
-    private readonly client: INeocontrolClient,
+    private readonly client: IInteoHubClient,
     private readonly log: Logger,
   ) {
     // Set accessory information

@@ -1,8 +1,8 @@
 {
   "name": "homebridge-inteo-somfy-blinds",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "type": "module",
-  "description": "Homebridge plugin for Somfy RTS blinds via Neocontrol/Inteo hub - exposes blinds as proper HomeKit Window Covering accessories",
+  "description": "Homebridge plugin for Somfy RTS blinds via Inteo/Somfy hub - local UDP control, no cloud required",
   "license": "MIT",
   "author": "juanroman",
   "repository": {

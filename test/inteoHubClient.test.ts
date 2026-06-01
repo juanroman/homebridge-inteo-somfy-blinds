@@ -179,6 +179,7 @@ describe('InteoHubClient — socket behavior', () => {
     return new InteoHubClient(HUB_MAC, retryAttempts, commandTimeout, log, {
       destination: '127.0.0.1',
       port: mockPort,
+      bindPort: 0,
       localAddresses: FAKE_LOCAL_ADDRESSES,
     });
   }
@@ -279,6 +280,7 @@ describe('InteoHubClient — socket behavior', () => {
     const client = new InteoHubClient('44:D5:F2:C1:03:AC', 1, 2000, log, {
       destination: '127.0.0.1',
       port: mockPort,
+      bindPort: 0,
       localAddresses: FAKE_LOCAL_ADDRESSES,
     });
     await expect(client.executeScene(0)).resolves.toBeUndefined();
@@ -290,6 +292,7 @@ describe('InteoHubClient — socket behavior', () => {
     const client = new InteoHubClient('44D5F2C103AC', 1, 2000, log, {
       destination: '127.0.0.1',
       port: mockPort,
+      bindPort: 0,
       localAddresses: FAKE_LOCAL_ADDRESSES,
     });
     await expect(client.executeScene(0)).resolves.toBeUndefined();

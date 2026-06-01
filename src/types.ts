@@ -19,9 +19,9 @@ export interface BlindConfig {
  * Advanced configuration options with sensible defaults.
  */
 export interface AdvancedConfig {
-  /** Number of retry attempts on failure (default: 3) */
+  /** Number of retry attempts on failure (default: 4) */
   retryAttempts: number;
-  /** HTTP request timeout in milliseconds (default: 5000) */
+  /** Command timeout in milliseconds (default: 500) */
   requestTimeout: number;
 }
 
@@ -32,8 +32,6 @@ export interface InteoSomfyBlindsConfig extends PlatformConfig {
   platform: 'InteoSomfyBlinds';
   /** Hub MAC address (with or without colons, e.g., "44:D5:F2:C1:03:AC" or "44D5F2C103AC") */
   hubMac: string;
-  /** Base URL for Neocontrol API (default: "http://iOS.neocontrolglobal.com:9151") */
-  baseUrl?: string;
   /** Array of blind configurations */
   blinds: BlindConfig[];
   /** Optional advanced settings */
@@ -44,18 +42,13 @@ export interface InteoSomfyBlindsConfig extends PlatformConfig {
  * Default values for advanced configuration.
  *
  * Why these values:
- * - 3 retries: Balances reliability with not waiting too long on persistent failures
- * - 5000ms timeout: The PRD specifies <5s response time as a requirement
+ * - 4 retries: UDP on local LAN is fast; more retries cover occasional hub radio gaps
+ * - 500ms timeout: Hub ACKs arrive in <100ms on LAN; 500ms is generous without feeling slow
  */
 export const DEFAULT_ADVANCED_CONFIG: AdvancedConfig = {
-  retryAttempts: 3,
-  requestTimeout: 5000,
+  retryAttempts: 4,
+  requestTimeout: 500,
 };
-
-/**
- * Default base URL for the Neocontrol cloud API.
- */
-export const DEFAULT_BASE_URL = 'http://iOS.neocontrolglobal.com:9151';
 
 /**
  * Position constants for the binary control model.

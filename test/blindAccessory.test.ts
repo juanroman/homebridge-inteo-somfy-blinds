@@ -4,8 +4,8 @@ import { BlindAccessory } from '../src/blindAccessory.js';
 import { Position } from '../src/types.js';
 import {
   createMockAccessory,
+  createMockInteoHubClient,
   createMockLogger,
-  createMockNeocontrolClient,
   createMockPlatform,
   MockHapStatusError,
 } from './mocks/homebridge.mock.js';
@@ -13,7 +13,7 @@ import {
 describe('BlindAccessory', () => {
   let mockPlatform: ReturnType<typeof createMockPlatform>;
   let mockAccessory: ReturnType<typeof createMockAccessory>;
-  let mockClient: ReturnType<typeof createMockNeocontrolClient>;
+  let mockClient: ReturnType<typeof createMockInteoHubClient>;
   let mockLogger: ReturnType<typeof createMockLogger>;
   let blindAccessory: BlindAccessory;
 
@@ -28,7 +28,7 @@ describe('BlindAccessory', () => {
 
     mockPlatform = createMockPlatform();
     mockAccessory = createMockAccessory('Test Blind', 'uuid-test');
-    mockClient = createMockNeocontrolClient();
+    mockClient = createMockInteoHubClient();
     mockLogger = createMockLogger();
 
     blindAccessory = new BlindAccessory(

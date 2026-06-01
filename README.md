@@ -7,9 +7,9 @@
 [![Release](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml/badge.svg)](https://github.com/juanroman/homebridge-inteo-somfy-blinds/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Homebridge plugin for **Somfy RTS blinds controlled via Inteo/Neocontrol hub**. Exposes your blinds as proper HomeKit Window Covering accessories.
+Homebridge plugin for **Somfy RTS blinds controlled via Inteo/Somfy hub**. Exposes your blinds as proper HomeKit Window Covering accessories, using direct local UDP communication — no cloud required.
 
-> **Important:** This plugin is specifically designed for the **Somfy RTS + Inteo/Neocontrol hub** combination, which is a popular smart home setup in Mexico and Latin America. If you have a different Somfy system (TaHoma, Connexoon, myLink, etc.), this plugin will not work for you.
+> **Important:** This plugin is specifically designed for the **Somfy RTS + Inteo/Somfy hub** combination, which is a popular smart home setup in Mexico and Latin America. If you have a different Somfy system (TaHoma, Connexoon, myLink, etc.), this plugin will not work for you.
 
 ## Important Limitations
 
@@ -87,8 +87,7 @@ To find your scene numbers:
 |--------|----------|---------|-------------|
 | `platform` | Yes | - | Must be `InteoSomfyBlinds` |
 | `name` | No | `Somfy Blinds` | Platform display name in logs |
-| `hubMac` | Yes | - | Your Neocontrol hub's MAC address |
-| `baseUrl` | No | `http://iOS.neocontrolglobal.com:9151` | Neocontrol API URL |
+| `hubMac` | Yes | - | Your Inteo/Somfy hub's MAC address |
 | `blinds` | Yes | - | Array of blind configurations |
 
 #### Blind Configuration
@@ -103,10 +102,14 @@ To find your scene numbers:
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `advanced.retryAttempts` | `3` | Number of retry attempts on failure |
-| `advanced.requestTimeout` | `5000` | HTTP timeout in milliseconds |
+| `advanced.retryAttempts` | `4` | Number of retry attempts on failure |
+| `advanced.requestTimeout` | `500` | Command timeout in milliseconds |
 
 ## How It Works
+
+### Local UDP Transport
+
+Commands are sent as 27-byte binary UDP broadcast packets directly to the hub on your local network (`255.255.255.255:9325`). The hub acknowledges each command individually. No internet connection is required.
 
 ### Position States
 
@@ -130,21 +133,22 @@ Commands are safe to repeat. Sending "open" to an already-open blind is harmless
 
 ### Blind shows "No Response"
 
-1. Check your internet connection (this plugin uses Neocontrol's cloud API)
-2. Verify your hub MAC address is correct
-3. Check Homebridge logs for error messages
-4. Try increasing `requestTimeout` in advanced settings
+1. Verify your hub MAC address is correct in the plugin config
+2. Make sure the Inteo/Somfy hub is powered on and reachable on your local network
+3. Check that Homebridge and the hub are on the same network (UDP broadcast requires same broadcast domain)
+4. Check Homebridge logs for error messages
+5. Try increasing `retryAttempts` in advanced settings
 
 ### Commands don't work
 
 1. Verify scene numbers are correct (remember: 0-indexed by creation order)
 2. Test the scenes manually in the Inteo app
-3. Check if Neocontrol cloud service is operational
+3. Confirm your router allows UDP broadcast between wired and wireless devices
 
 ### Blind shows 50% after command
 
 This means the command failed. Check:
-- Network connectivity
+- Hub power and local network connectivity
 - Scene number accuracy
 - Homebridge logs for specific errors
 
@@ -152,8 +156,8 @@ This means the command failed. Check:
 
 This plugin is designed for a specific hardware combination that is **not supported by other Homebridge plugins**:
 
-- **Hardware:** Somfy RTS motors + Inteo/Neocontrol hub
-- **API:** Uses Neocontrol's cloud API
+- **Hardware:** Somfy RTS motors + Inteo/Somfy hub
+- **Transport:** Direct UDP on your local network — no cloud dependency
 - **Control Method:** Scene-based control (each blind operation is a scene in the Inteo app)
 - **Region:** Popular setup in Mexico and Latin America
 
@@ -166,9 +170,9 @@ This plugin is designed for a specific hardware combination that is **not suppor
 
 ## Requirements
 
-- Node.js 20.15.1+, 22+, or 24+
+- Node.js 22+ or 24+
 - Homebridge 1.8.0+ or 2.0.0+
-- Neocontrol/Inteo hub with cloud connectivity
+- Inteo/Somfy hub on the same local network as Homebridge
 - Scenes configured in the Inteo app
 
 ## Contributing

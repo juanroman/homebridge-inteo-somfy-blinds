@@ -9,13 +9,14 @@ import type {
 } from 'homebridge';
 
 import { BlindAccessory } from './blindAccessory.js';
-import { NeocontrolClient } from './neocontrolClient.js';
+import { InteoHubClient } from './inteoHubClient.js';
+import type { IInteoHubClient } from './inteoHubClient.js';
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings.js';
 import type { BlindConfig, InteoSomfyBlindsConfig } from './types.js';
-import { DEFAULT_ADVANCED_CONFIG, DEFAULT_BASE_URL } from './types.js';
+import { DEFAULT_ADVANCED_CONFIG } from './types.js';
 
 /**
- * Platform plugin for Inteo/Neocontrol Somfy RTS blinds.
+ * Platform plugin for Somfy RTS blinds via Inteo/Somfy hub.
  *
  * This plugin discovers blinds from configuration and exposes them as
  * HomeKit WindowCovering accessories with binary control (open/closed/unknown).
@@ -74,16 +75,13 @@ export class InteoSomfyBlindsPlatform implements DynamicPlatformPlugin {
       return;
     }
 
-    const baseUrl = this.config.baseUrl ?? DEFAULT_BASE_URL;
     const advancedConfig = {
       ...DEFAULT_ADVANCED_CONFIG,
       ...this.config.advanced,
     };
 
-    // Create shared HTTP client for all blinds
-    // Why shared: All blinds use same hub, so same base URL and auth
-    const client = new NeocontrolClient(
-      baseUrl,
+    // Create shared UDP client for all blinds — same hub, same broadcast domain
+    const client = new InteoHubClient(
       this.config.hubMac,
       advancedConfig.retryAttempts,
       advancedConfig.requestTimeout,
@@ -145,7 +143,7 @@ export class InteoSomfyBlindsPlatform implements DynamicPlatformPlugin {
   /**
    * Register a single blind as a HomeKit accessory.
    */
-  private registerBlind(blindConfig: BlindConfig, client: NeocontrolClient): void {
+  private registerBlind(blindConfig: BlindConfig, client: IInteoHubClient): void {
     // Generate unique ID from hub MAC + blind name
     // This ensures UUID is stable across restarts and unique per blind
     const uuid = this.api.hap.uuid.generate(`${this.config.hubMac}-${blindConfig.name}`);

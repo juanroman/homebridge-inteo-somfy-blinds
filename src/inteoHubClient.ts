@@ -161,7 +161,7 @@ export class InteoHubClient implements IInteoHubClient {
       socket.on('message', (msg: Buffer, rinfo: dgram.RemoteInfo) => {
         if (settled) return;
         if (isSelfEcho(rinfo, localAddresses)) return;
-        if (msg.length < 17) return;
+        if (msg.length !== 26) return;
         if (msg[21] !== 0x0d) return;
         const ack = deserializeHubAck(msg);
         if (ack.seqNum !== sentSeqNum) return;

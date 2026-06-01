@@ -83,7 +83,7 @@ export class InteoHubClient implements IInteoHubClient {
   private readonly hubMacBytes: Uint8Array;
   private readonly destination: string;
   private readonly port: number;
-  private readonly injectedLocalAddresses: Set<string> | undefined;
+  private readonly localAddresses: Set<string>;
 
   // Shared across all executeScene calls — hub silently ignores duplicate seqNums
   private seqNum = 0;
@@ -99,7 +99,7 @@ export class InteoHubClient implements IInteoHubClient {
     this.hubMacBytes = new Uint8Array((macHex.match(/.{2}/g) ?? []).map((b) => parseInt(b, 16)));
     this.destination = options?.destination ?? '255.255.255.255';
     this.port = options?.port ?? 9325;
-    this.injectedLocalAddresses = options?.localAddresses;
+    this.localAddresses = options?.localAddresses ?? getLocalAddresses();
   }
 
   async executeScene(sceneId: number): Promise<void> {
@@ -127,7 +127,7 @@ export class InteoHubClient implements IInteoHubClient {
 
   private sendOnce(sceneId: number): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const localAddresses = this.injectedLocalAddresses ?? getLocalAddresses();
+      const localAddresses = this.localAddresses;
       const sentSeqNum = this.seqNum;
       this.seqNum = (this.seqNum + 1) & 0xff;
 
@@ -162,6 +162,7 @@ export class InteoHubClient implements IInteoHubClient {
         if (settled) return;
         if (isSelfEcho(rinfo, localAddresses)) return;
         if (msg.length < 17) return;
+        if (msg[21] !== 0x0d) return;
         const ack = deserializeHubAck(msg);
         if (ack.seqNum !== sentSeqNum) return;
         if (!ack.success) {
@@ -175,7 +176,7 @@ export class InteoHubClient implements IInteoHubClient {
         cleanup(err);
       });
 
-      socket.bind({ port: 9325, exclusive: false }, () => {
+      socket.bind({ port: 0 }, () => {
         socket.setBroadcast(true);
         socket.send(packet, this.port, this.destination, (err) => {
           if (err) {

@@ -1,6 +1,13 @@
 import * as dgram from 'dgram';
 
-type HubBehavior = 'ack' | 'nack' | 'wrong-seqnum' | 'short-msg' | 'self-echo-only' | 'silent';
+type HubBehavior =
+  | 'ack'
+  | 'nack'
+  | 'wrong-seqnum'
+  | 'short-msg'
+  | 'wrong-msgtype'
+  | 'self-echo-only'
+  | 'silent';
 
 /**
  * Real UDP socket that simulates the Inteo/Somfy hub for testing.
@@ -101,6 +108,15 @@ export class MockInteoHub {
     if (behavior === 'short-msg') {
       // Send a message shorter than 17 bytes (filtered by client)
       sock.send(Buffer.alloc(10), rinfo.port, rinfo.address);
+      return;
+    }
+
+    if (behavior === 'wrong-msgtype') {
+      // Send valid-length ACK-shaped packet but with wrong MsgType (filtered by client)
+      const seqNum = msg[16] ?? 0;
+      const ack = buildMockAck(seqNum);
+      ack[21] = 0xff; // wrong MsgType
+      sock.send(ack, rinfo.port, rinfo.address);
       return;
     }
 

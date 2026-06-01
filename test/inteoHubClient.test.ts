@@ -295,6 +295,18 @@ describe('InteoHubClient — socket behavior', () => {
     await expect(client.executeScene(0)).resolves.toBeUndefined();
     expect(mockHub.recordedPackets[0]?.[9]).toBe(0x44);
   });
+
+  it('handles two concurrent executeScene calls without ACK collision', async () => {
+    const client = makeClient();
+    await Promise.all([client.executeScene(1), client.executeScene(2)]);
+    expect(mockHub.recordedPackets).toHaveLength(2);
+  });
+
+  it('ignores packets with wrong MsgType then resolves on next ACK', async () => {
+    mockHub.queueBehaviors('wrong-msgtype', 'ack');
+    const client = makeClient(3, 300);
+    await expect(client.executeScene(8)).resolves.toBeUndefined();
+  });
 });
 
 describe('getLocalAddresses', () => {

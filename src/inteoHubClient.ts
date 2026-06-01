@@ -68,6 +68,12 @@ export interface InteoHubClientOptions {
   destination?: string;
   /** Override UDP port — for testing with a mock hub on a random port. */
   port?: number;
+  /**
+   * Override the local port to bind before sending.
+   * Production must bind to 9325 — the hub ACKs by broadcasting back to port 9325.
+   * Tests pass 0 to get an ephemeral port (mock hub replies to rinfo.port instead).
+   */
+  bindPort?: number;
   /** Override local address set — for testing (avoids filtering loopback responses). */
   localAddresses?: Set<string>;
 }
@@ -83,6 +89,7 @@ export class InteoHubClient implements IInteoHubClient {
   private readonly hubMacBytes: Uint8Array;
   private readonly destination: string;
   private readonly port: number;
+  private readonly bindPort: number;
   private readonly localAddresses: Set<string>;
 
   // Shared across all executeScene calls — hub silently ignores duplicate seqNums
@@ -99,6 +106,7 @@ export class InteoHubClient implements IInteoHubClient {
     this.hubMacBytes = new Uint8Array((macHex.match(/.{2}/g) ?? []).map((b) => parseInt(b, 16)));
     this.destination = options?.destination ?? '255.255.255.255';
     this.port = options?.port ?? 9325;
+    this.bindPort = options?.bindPort ?? this.port;
     this.localAddresses = options?.localAddresses ?? getLocalAddresses();
   }
 
@@ -176,7 +184,7 @@ export class InteoHubClient implements IInteoHubClient {
         cleanup(err);
       });
 
-      socket.bind({ port: 0 }, () => {
+      socket.bind({ port: this.bindPort }, () => {
         socket.setBroadcast(true);
         socket.send(packet, this.port, this.destination, (err) => {
           if (err) {

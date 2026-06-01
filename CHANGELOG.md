@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-05-31
+
+### Fixed
+
+- **Commands no longer time out even though the blind moves.** The UDP socket was binding to an ephemeral port (OS-assigned) instead of port 9325. The hub broadcasts its ACK back to port 9325, so the ACK was arriving with no socket listening — every command reported failure and the blind was stuck at 50% (unknown) in HomeKit despite physically moving. Fix: socket now binds to port 9325 before sending, matching the hub's expected reply target.
+
 ## [1.1.0] - 2026-05-31
 
 ### Changed
@@ -83,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for Node.js v20, v22, and v24
 - TypeScript implementation with full type safety
 
+[1.1.1]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.0.6...v1.1.0
 [1.0.6]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.0.4...v1.0.5

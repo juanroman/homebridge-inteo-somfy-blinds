@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-06-29
+
+### Changed
+
+- Upgraded TypeScript `^5.7.2` → `^6.0.3`
+- Upgraded homebridge (dev) `^2.0.0-beta.0` → `^2.1.0` (stable); updated `engines.homebridge` range to `^2.0.0`
+- Upgraded vitest + @vitest/coverage-v8 `^4.0.15` → `^4.1.9`
+- Upgraded eslint `^10.4.0` → `^10.6.0`
+- Upgraded typescript-eslint `^8.60.0` → `^8.62.1`
+- Upgraded prettier `^3.4.1` → `^3.9.3`
+- Upgraded rimraf `^6.0.1` → `^6.1.3`
+
 ## [1.1.1] - 2026-05-31
 
 ### Fixed
@@ -89,6 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for Node.js v20, v22, and v24
 - TypeScript implementation with full type safety
 
+[1.1.2]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.0.6...v1.1.0
 [1.0.6]: https://github.com/juanroman/homebridge-inteo-somfy-blinds/compare/v1.0.5...v1.0.6

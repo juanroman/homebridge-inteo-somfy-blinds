@@ -1,13 +1,7 @@
 import * as dgram from 'dgram';
 
 type HubBehavior =
-  | 'ack'
-  | 'nack'
-  | 'wrong-seqnum'
-  | 'short-msg'
-  | 'wrong-msgtype'
-  | 'self-echo-only'
-  | 'silent';
+  'ack' | 'nack' | 'wrong-seqnum' | 'short-msg' | 'wrong-msgtype' | 'self-echo-only' | 'silent';
 
 /**
  * Real UDP socket that simulates the Inteo/Somfy hub for testing.

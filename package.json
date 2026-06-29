@@ -1,6 +1,6 @@
 {
   "name": "homebridge-inteo-somfy-blinds",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "description": "Homebridge plugin for Somfy RTS blinds via Inteo/Somfy hub - local UDP control, no cloud required",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "CHANGELOG.md"
   ],
   "engines": {
-    "homebridge": "^1.8.0 || ^2.0.0-beta.0",
+    "homebridge": "^1.8.0 || ^2.0.0",
     "node": "^22 || ^24"
   },
   "keywords": [
@@ -52,14 +52,14 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.10.1",
-    "@vitest/coverage-v8": "^4.0.15",
-    "eslint": "^10.4.0",
-    "homebridge": "^2.0.0-beta.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint": "^10.6.0",
+    "homebridge": "^2.1.0",
     "jiti": "^2.7.0",
-    "prettier": "^3.4.1",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.60.0",
-    "vitest": "^4.0.15"
+    "prettier": "^3.9.3",
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1",
+    "vitest": "^4.1.9"
   }
 }

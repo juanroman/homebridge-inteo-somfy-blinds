@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-07-30
+
+### Security
+
+- Bumped `postcss` (dev, transitive via vitest/vite) `8.5.16` → `8.5.25` — fixes a path traversal vulnerability in source map auto-loading (GHSA-r28c-9q8g-f849)
+- Bumped `brace-expansion` (dev, transitive via eslint/minimatch) to `5.0.9` via `overrides` — fixes a denial-of-service via unbounded expansion (GHSA-mh99-v99m-4gvg)
+
 ## [1.1.2] - 2026-06-29
 
 ### Changed

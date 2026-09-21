@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2026-09-21
+
+### Fixed
+
+- Release pipeline's "Verify package is installable" step now polls the npm registry for up to 3 minutes instead of a fixed 10s sleep, so registry propagation delay after `npm publish` no longer fails the release job after a successful publish.
+
 ## [1.1.4] - 2026-09-21
 
 ### Security

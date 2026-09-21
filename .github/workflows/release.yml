@@ -106,14 +106,14 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/v}
           # Registry propagation after publish can take anywhere from
           # seconds to a few minutes; poll instead of a fixed sleep.
-          for i in $(seq 1 12); do
+          for i in $(seq 1 15); do
             if npm install homebridge-inteo-somfy-blinds@$VERSION --dry-run; then
               exit 0
             fi
-            echo "Version $VERSION not available yet, retrying in 15s... ($i/12)"
-            sleep 15
+            echo "Version $VERSION not available yet, retrying in 30s... ($i/15)"
+            sleep 30
           done
-          echo "::error::homebridge-inteo-somfy-blinds@$VERSION did not become installable within 3 minutes"
+          echo "::error::homebridge-inteo-somfy-blinds@$VERSION did not become installable within 7.5 minutes"
           exit 1
 
   # Job 4: Create GitHub release with automated notes

@@ -102,12 +102,19 @@ jobs:
 
       - name: Verify package is installable
         run: |
-          # Wait a few seconds for npm registry to propagate
-          sleep 10
           # Extract version from tag (v1.0.1 → 1.0.1)
           VERSION=${GITHUB_REF#refs/tags/v}
-          # Try to install the just-published version
-          npm install homebridge-inteo-somfy-blinds@$VERSION --dry-run
+          # Registry propagation after publish can take anywhere from
+          # seconds to a few minutes; poll instead of a fixed sleep.
+          for i in $(seq 1 12); do
+            if npm install homebridge-inteo-somfy-blinds@$VERSION --dry-run; then
+              exit 0
+            fi
+            echo "Version $VERSION not available yet, retrying in 15s... ($i/12)"
+            sleep 15
+          done
+          echo "::error::homebridge-inteo-somfy-blinds@$VERSION did not become installable within 3 minutes"
+          exit 1
 
   # Job 4: Create GitHub release with automated notes
   release:

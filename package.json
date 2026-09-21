@@ -52,7 +52,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.10.1",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^10.6.0",
     "homebridge": "^2.1.0",
     "jiti": "^2.7.0",
@@ -60,7 +60,7 @@
     "rimraf": "^6.1.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.1",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.11"
   },
   "overrides": {
     "brace-expansion": "^5.0.9"

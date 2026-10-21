@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.7] - 2026-10-21
+
+### Security
+
+- Bumped `vite` (dev, transitive via vitest) `8.3.0` → `8.3.5` — fixes three advisories in the bundled `launch-editor`: arbitrary command execution via editor CLI flag misinterpretation (GHSA-r825-w8mm-5pxw), `fs.existsSync()` bypass on Windows (GHSA-587h-7wmj-h5pm), and missing `%` escaping in `escapeCmdArgs()` on Windows (GHSA-698v-4r3x-3vcv)
+- Bumped `source-map-js` (dev, transitive via vitest/vite) `1.2.1` → `1.2.2` — fixes an event-loop denial of service via indexed source-map section offsets (GHSA-68fv-2mgg-jv7q)
+- Bumped `brace-expansion` (dev, pinned override) `5.0.9` → `5.0.12` — fixes remaining quadratic-time and stack-exhaustion DoS advisories surfaced by `npm audit`
+
 ## [1.1.6] - 2026-09-21
 
 ### Fixed

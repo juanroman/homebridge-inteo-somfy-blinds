@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Security
+
+- Bumped `vitest` (dev) `4.1.11` → `4.1.12` and `@vitest/coverage-v8` (dev) `4.1.11` → `4.1.12`, pulling in `@vitest/mocker` `4.1.12` — fixes a Windows backslash path-traversal bypass of the `@vitest/mocker` redirect allowlist
+
 ## [1.1.7] - 2026-10-21
 
 ### Security
